@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
 <!--		<dependency>-->
@@ -43,13 +44,44 @@
 			  <artifactId>zipkin-server</artifactId>
 			  <version>3.5.1</version>
 			</dependency>
-
+		
+		<!--Eureka Discovery Client. Also, add the Spring cloud dependencies under dependencyManagement:-->
+<!--		<dependency>-->
+<!--		    <groupId>org.springframework.cloud</groupId>-->
+<!--		    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+<!--		    <version>4.3.0</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--	        <groupId>org.springframework.boot</groupId>-->
+<!--	        <artifactId>spring-boot-starter-web</artifactId>-->
+<!--	    </dependency>-->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--This means you're using Spring Cloud 2025.0.0, which is part of the Spring Cloud Greenwich-style release train (aligned with Spring Boot 3.2+).
+
+			Use of @EnableEurekaClient in Spring Cloud 2025.0.0
+			In Spring Cloud 2022.0 and later, including 2025.0.0:
+			
+			You do not need @EnableEurekaClient in TraceCardsApplication.java anymore.
+			Just include the Eureka client dependency and proper configuration in application.yml or application.properties.
+			Spring Boot will auto-configure the Eureka client based on the presence of the dependency.-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
